@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Project Coordinates -->
+    <groupId>com.example</groupId>
+    <artifactId>event-management-system</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <name>Event Management System</name>
+    <url>http://www.example.com</url>
+
+    <!-- Parent definition (optional if your project is part of a larger multi-module project) -->
+    <parent>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.7</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <dependencies>
+        <!-- Servlet API (needed for JSP and Servlets) -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JSTL (for using JSP tag libraries) -->
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.3.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Tomcat Embedded (for running Tomcat locally, optional) -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>9.0.50</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- SLF4J (logging framework) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+
+        <!-- Logback (default logger for logging in Java applications) -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.6</version>
+        </dependency>
+
+        <!-- JSP compiler (optional for compiling JSP pages at build time) -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>jasper</artifactId>
+            <version>9.0.50</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- Build section -->
+    <build>
+        <finalName>event-management-system</finalName>
+
+        <!-- Tomcat Plugin for Deployment -->
+        <plugins>
+            <!-- Maven Compiler Plugin (to specify JDK version) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <!-- Maven WAR Plugin (to build a WAR file) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                </configuration>
+            </plugin>
+
+            <!-- Deploy to Tomcat plugin -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <url>http://localhost:8080/manager/text</url>
+                    <server>tomcat-server</server>
+                    <username>jenkins</username>
+                    <password>password</password>
+                    <path>/event-management-system</path>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- Jenkins Deployment Configuration -->
+    <servers>
+        <server>
+            <id>tomcat-server</id>
+            <username>jenkins</username>
+            <password>password</password>
+        </server>
+    </servers>
+
+</project>
